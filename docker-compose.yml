@@ -1,0 +1,32 @@
+#docker-compose cho master node
+version: '3'
+#bien duong dan khai bao trong file .env
+
+services:
+#1. contaienr redis-master node
+  redis-master:
+    build:
+      context: ${redis_path}
+      dockerfile: Dockerfile
+    image: redis-hoat:7.4.1
+    container_name: redis-ucx-v7.4.1
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${redis_config_path}/redis.conf:/etc/redis/conf/redis.conf
+      - ${redis_path}/data:/etc/redis/data
+      - ${redis_path}/logs:/etc/redis/logs
+#3. cau hinh time container dong bo voi time docker host
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+#4. cau hinh roate logs cho container chi 10MB
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "20"
+    networks:
+      - redis-master-net
+networks:
+  redis-master-net:
+    driver: bridge
