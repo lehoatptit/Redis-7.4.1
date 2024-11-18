@@ -19,7 +19,7 @@ COPY redis-entrypoint.sh /usr/local/bin/
 RUN chown redis:redis /etc/redis/* && \
     chmod +x /usr/local/bin/redis-entrypoint.sh
 
-# mo port  26379 cho Redis trong image
+# mo port  6379 cho Redis trong image
 EXPOSE 6379
 
 # dat entrypoint cho contaienr thuc thi lenh chay service redis
